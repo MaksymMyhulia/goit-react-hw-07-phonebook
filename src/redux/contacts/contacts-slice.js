@@ -1,32 +1,55 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
-import initialContacts from 'data/contacts.json';
+import {
+  addContact,
+  deleteContact,
+  fetchContacts,
+} from './contacts-operations';
 
 const contactsSlice = createSlice({
+  // Ім'я слайсу
   name: 'contacts',
-  initialState: initialContacts,
-  reducers: {
-    addContact: {
-      reducer: (state, { payload }) => {
-        return [...state, payload];
-      },
-      
-      prepare: data => {
-        return {
-          payload: {
-            id: nanoid(),
-            ...data,
-          },
-        };
-      },
+  // Початковий стан редюсера слайсу
+  initialState: { items: [], isLoading: false, error: null },
+  // Об'єкт редюсерів
+  extraReducers: {
+    [fetchContacts.pending](state) {
+      state.isLoading = true;
     },
-    deleteContact: (state, { payload }) => {
-      return state.filter(({ id }) => id !== payload);
+    [fetchContacts.fulfilled](state, action) {
+      state.items = action.payload;
+      state.isLoading = false;
+    },
+    [fetchContacts.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    /////////////////////////////////////////////////
+
+    [addContact.pending](state) {
+      state.isLoading = true;
+    },
+    [addContact.fulfilled](state, action) {
+      state.items.push(action.payload);
+      state.isLoading = false;
+    },
+    [addContact.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //////////////////////////////////////////////////
+    [deleteContact.pending](state) {
+      state.isLoading = true;
+    },
+    [deleteContact.fulfilled](state, action) {
+      state.items = state.items.filter(item => item.id !== action.payload.id);
+      state.isLoading = false;
+    },
+    [deleteContact.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
     },
   },
 });
 
-export const { addContact, deleteContact } = contactsSlice.actions;
-export default contactsSlice.reducer;
-
-
+// Редюсер слайсу
+export const contactsReducer = contactsSlice.reducer;

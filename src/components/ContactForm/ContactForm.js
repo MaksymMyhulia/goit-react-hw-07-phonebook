@@ -8,7 +8,7 @@ import { toastifyOptions } from 'utils/toastifyOptions';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/contacts-slice';
-import { getContacts } from 'redux/contacts/contacts-selectors';
+import { getContacts } from 'redux/contacts/contacts-operations';
 
 
 import {
