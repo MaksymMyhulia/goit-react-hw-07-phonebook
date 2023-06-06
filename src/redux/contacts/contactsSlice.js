@@ -3,7 +3,7 @@ import {
   addContact,
   deleteContact,
   fetchContacts,
-} from './contacts-operations';
+} from './contactsOperations';
 
 const contactsSlice = createSlice({
   // Ім'я слайсу

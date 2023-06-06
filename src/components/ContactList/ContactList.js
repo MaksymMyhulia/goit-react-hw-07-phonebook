@@ -1,34 +1,67 @@
-import React from "react";
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/contacts/contacts-slice';
-import { getFilteredContacts } from 'redux/contacts/contacts-operations';
 
-import { List, Item, DeleteBtn } from "./ContactList.styled";
+import { toast } from 'react-toastify';
+import { toastifyOptions } from 'utils/toastifyOptions';
 
+import { List, Item, DeleteBtn } from './ContactList.styled';
 
+import { deleteContact } from 'redux/contacts/contactsOperations';
+import { fetchContacts } from 'redux/contacts/contactsOperations';
 
-export const ContactList = () => { 
-const filteredContacts = useSelector(getFilteredContacts);
+import {
+  selectContacts,
+  selectIsLoading,
+  selectError,
+  selectFilteredContacts,
+  selectFilter,
+} from 'redux/selectors';
+import { Loader } from 'components/Loader/Loader';
 
-const dispatch = useDispatch();
+export const ContactList = () => {
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+  const filter = useSelector(selectFilter);
 
-const onDeleteContact = contactId => {
-  dispatch(deleteContact(contactId));
-}
-    return (
-    <List>
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+  
+  const result = useSelector(selectFilteredContacts);
+
+  const getFilteredContacts = data => {
+    if (filter.toLowerCase() && !data.length) {
+      toast.warn(`No contacts matching your request`, toastifyOptions);
+    }
+    return data;
+  };
+
+  const filteredContacts = getFilteredContacts(result);
+
+  return (
+    <>
+      {isLoading && contacts.length === 0 && <Loader />}
+      {error && !isLoading && <div>Ooops, error...</div>}
+      <List>
         {filteredContacts.map(({ name, number, id }) => {
-            return ( 
-              <Item key={id}>
-                <span>{name}:</span>
-                <span>{number}</span>
-              
-                <DeleteBtn type="button" onClick={() => onDeleteContact(id)}>Delete</DeleteBtn>
-              </Item>
-              
-            )}
-            )}
-    </List>
-    );
-};
+          return (
+            <Item key={id}>
+              <span>{name}:</span>
+              <span>{number}</span>
 
+              <DeleteBtn
+                type="button"
+                onClick={() => dispatch(deleteContact(id))}
+              >
+                Delete
+              </DeleteBtn>
+            </Item>
+          );
+        })}
+      </List>
+    </>
+  );
+};
