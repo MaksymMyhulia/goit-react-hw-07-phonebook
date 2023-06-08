@@ -5,11 +5,17 @@ import {
   fetchContacts,
 } from './contactsOperations';
 
+const initialState = {
+  items: [],
+  isLoading: false,
+  error: null,
+};
+
 const contactsSlice = createSlice({
   // Ім'я слайсу
   name: 'contacts',
   // Початковий стан редюсера слайсу
-  initialState: { items: [], isLoading: false, error: null },
+  initialState,
   // Об'єкт редюсерів
   extraReducers: {
     [fetchContacts.pending](state) {
