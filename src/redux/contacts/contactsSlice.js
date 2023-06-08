@@ -58,4 +58,4 @@ const contactsSlice = createSlice({
 });
 
 // Редюсер слайсу
-export const contactsReducer = contactsSlice.reducer;
+export default contactsSlice.reducer;
