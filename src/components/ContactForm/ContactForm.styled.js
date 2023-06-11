@@ -7,7 +7,6 @@ flex-direction: column;
 align-items: center;
 gap: 12px;
 
-margin: 0 auto;
 margin-bottom: ${({theme}) => theme.space[4]}px;
 padding: ${({theme}) => theme.space[3]}px;
 
@@ -26,7 +25,7 @@ max-width: 100%;
 `;
 
 export const LabelWrapper = styled.div`
-gisplay: flex;
+display: flex;
 gap: ${({theme}) => theme.space[3]}px;
 margin-left: ${({theme}) => theme.space[3]}px;
 `;

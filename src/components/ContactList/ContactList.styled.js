@@ -14,7 +14,7 @@ max-width: 100%;
 
 export const Item = styled.li`
 display: flex;
-justify content: space-between;
+justify-content: space-between;
 align-items: center;
 gap: ${({theme}) => theme.space[4]}px;
 width: 288px;

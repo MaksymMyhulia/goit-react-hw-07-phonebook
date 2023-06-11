@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { toast } from 'react-toastify';
@@ -7,7 +6,7 @@ import { toastifyOptions } from 'utils/toastifyOptions';
 import { List, Item, DeleteBtn } from './ContactList.styled';
 
 import { deleteContact } from 'redux/contacts/contactsOperations';
-import { fetchContacts } from 'redux/contacts/contactsOperations';
+
 
 import {
   selectContacts,
@@ -26,9 +25,6 @@ export const ContactList = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
   
   const result = useSelector(selectFilteredContacts);
 
