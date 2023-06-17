@@ -42,11 +42,11 @@ export const ContactList = () => {
       {isLoading && contacts.length === 0 && <Loader />}
       {error && !isLoading && <div>Ooops, error...</div>}
       <List>
-        {filteredContacts.map(({ name, number, id }) => {
+        {filteredContacts.map(({ name, phone, id }) => {
           return (
             <Item key={id}>
               <span>{name}:</span>
-              <span>{number}</span>
+              <span>{phone}</span>
 
               <DeleteBtn
                 type="button"

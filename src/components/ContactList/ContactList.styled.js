@@ -3,21 +3,19 @@ import styled from "@emotion/styled";
 export const List = styled.ul`
 display: flex;
 flex-direction: column;
-align-items: center;
 gap: ${({theme}) => theme.space[4]}px;
 padding: ${({theme}) => theme.space[3]}px ${({theme}) => theme.space[4]}px;
 margin: 0 auto;
 
-width: 320px;
 max-width: 100%;
 `; 
 
 export const Item = styled.li`
 display: flex;
+flex-direction: row;
 justify-content: space-between;
 align-items: center;
 gap: ${({theme}) => theme.space[4]}px;
-width: 288px;
 
 color: ${({theme}) => theme.colors.text};
 
